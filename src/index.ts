@@ -1,26 +1,30 @@
 import express from "express"
-import { escuchando } from "./controllers/auth.controller"
+
+import { PORT } from "./config"
 import { db } from "./config/db"
+import colors from "colors"
+import productsRouters from "../src/router/products.routes"
 
 
 //Connect data base
 
-const ConnectDB = async ()=> {
+const ConnectDB = async () => {
     try {
-       await db.authenticate()//autenticar la base de datos
+        await db.authenticate()//autenticar la base de datos
         db.sync()//para ir creando las tablas en la db
-        console.log("coneccion existosa a la data base")
+        console.log(colors.green.bold("coneccion existosa a la data base"))
     } catch (error) {
         console.log(error)
-        console.log("hubo un erropr al conectar con la DATA BASE")
+        console.log(
+            colors.bgRed.white("hubo un erropr al conectar con la DATA BASE"))
     }
 }
 ConnectDB()
 
 const app = express()
-const port = 5050
-app.listen(port, () => {
-    console.log(`escuchando en el puerto ${port}`)
+app.use(express.json())
+app.use("/api", productsRouters)
+app.listen(PORT, () => {
+    console.log(colors.cyan.bold(`escuchando en el puerto ${PORT}`))
 
 })
-app.use(escuchando)
