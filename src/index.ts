@@ -1,8 +1,9 @@
 import express from "express"
-
 import { PORT } from "./config"
 import { db } from "./config/db"
 import colors from "colors"
+import cors, { CorsOptions } from "cors"
+import morgan from "morgan"
 import productsRouters from "../src/router/products.routes"
 
 
@@ -21,8 +22,23 @@ const ConnectDB = async () => {
 }
 ConnectDB()
 
-const app = express()
+const app = express() 
+
+//Permitir el acceso a la api desde cualquier origen
+const corsOptions: CorsOptions = {
+    origin: function (origin, callback) {
+        if (origin === "http://localhost:5173") {
+            callback(null, true)
+        } else {
+            callback(new Error("No permitido por CORS"))
+        }
+    }
+}
+app.use(cors(corsOptions))//para permitir el acceso a la api desde cualquier origen
+//Middleware para parsear el body de las peticiones a json
 app.use(express.json())
+app.use(morgan("dev"))//para ver las peticiones en la consola
+
 app.use("/api", productsRouters)
 app.listen(PORT, () => {
     console.log(colors.cyan.bold(`escuchando en el puerto ${PORT}`))
