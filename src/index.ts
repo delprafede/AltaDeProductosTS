@@ -4,7 +4,7 @@ import { db } from "./config/db"
 import colors from "colors"
 import cors, { CorsOptions } from "cors"
 import morgan from "morgan"
-import productsRouters from "../src/router/products.routes"
+import productsRouters from "./router/products.routes"
 
 
 //Connect data base
