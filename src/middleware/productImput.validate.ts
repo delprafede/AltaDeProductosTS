@@ -22,26 +22,5 @@ export const validateProductId = [
 ]
 
 
-// const { name, price, available } = req.body
-// if (!name || !price || available === undefined) {
-//     return res.status(400).json({
-//         message: "All fields are required"
-//     })
-// }
-// if (typeof name !== "string") {
-//     return res.status(400).json({
-//         message: "Name must be a string"
-//     })
-// }
-// if (typeof price !== "number") {
-//     return res.status(400).json({
-//         message: "Price must be a number"
-//     })
-// }
-// if (typeof available !== "boolean") {
-//     return res.status(400).json({
-//         message: "Available must be a boolean"
-//     })
-// }
-// next()
+
 
