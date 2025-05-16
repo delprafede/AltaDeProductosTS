@@ -22,19 +22,30 @@ const ConnectDB = async () => {
 }
 ConnectDB()
 
-const app = express() 
+const app = express()
 
 //Permitir el acceso a la api desde cualquier origen
-const corsOptions: CorsOptions = {
-    origin: function (origin, callback) {
-        if (origin === "http://localhost:5173") {
-            callback(null, true)
-        } else {
-            callback(new Error("No permitido por CORS"))
-        }
+// const corsOptions: CorsOptions = {
+//     origin: function (origin, callback) {
+//         if (origin === "http://localhost:5173") {
+//             callback(null, true)
+//         } else {
+//             callback(new Error("No permitido por CORS"))
+//         }
+//     }
+// }
+
+app.use(cors(
+    {
+        origin: "*", // Permitir cualquier origen
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"], // Métodos permitidos
+        allowedHeaders: ["Content-Type", "Authorization"], // Encabezados permitidos
+        credentials: true, // Permitir credenciales
     }
-}
-app.use(cors(corsOptions))//para permitir el acceso a la api desde cualquier origen
+))//para permitir el acceso a la api desde cualquier origen
+
+
+// app.use(cors(corsOptions))//para permitir el acceso a la api desde cualquier origen
 //Middleware para parsear el body de las peticiones a json
 app.use(express.json())
 app.use(morgan("dev"))//para ver las peticiones en la consola
